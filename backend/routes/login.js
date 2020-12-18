@@ -15,9 +15,9 @@ router.post('/', (req,res)=> {
            }
 
             if ( result.password === password){
-                res.status(200)
+             
                 res.type('application/json')
-                res.json({message: "Auth success"})
+                res.status(200).json({message: "Auth success"})
             } 
         }).catch(e=> {
             console.log(e)
