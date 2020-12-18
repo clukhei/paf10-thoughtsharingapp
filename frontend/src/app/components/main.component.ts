@@ -23,13 +23,14 @@ export class MainComponent implements OnInit {
 	  if (this.cameraSvc.hasImage()) {
 		  const img = this.cameraSvc.getImage()
 		  this.imagePath = img.imageAsDataUrl
-		  this.form.get('image').setValue(this.imagePath)
+		  this.form.get('image').setValue(img.imageData)
 	  }
 	
 	}
 
 	clear() {
 		this.imagePath = '/assets/cactus.png'
+		this.form.reset()
 	}
 
 	share(){
@@ -38,6 +39,9 @@ export class MainComponent implements OnInit {
 		formData.set('image',this.form.get('image').value)
 		formData.set('title', this.form.get('title').value)
 		formData.set('comments',this.form.get('comments').value )
+		this.http.post('/share/', formData)
+			.toPromise()
+			.then(res=> console.log(res))
 		
 	}
 }

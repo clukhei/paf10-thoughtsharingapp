@@ -5,7 +5,7 @@ const mongoClient = require("./mongo_db");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
-const apiRouter = require("./routes/api");
+const apiRouter = require("./routes/share");
 const loginRouter = require("./routes/login")
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
 
-app.use("/api", apiRouter);
+app.use("/share", apiRouter);
 app.use("/login", loginRouter)
 
 const PORT =
