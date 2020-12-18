@@ -12,7 +12,7 @@ const app = express();
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
-
+app.use(express.static(__dirname + "/frontend"))
 app.use("/share", apiRouter);
 app.use("/login", loginRouter)
 
