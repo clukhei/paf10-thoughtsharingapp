@@ -16,6 +16,9 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/share", apiRouter);
 app.use("/login", loginRouter)
 
+app.use((req,res)=> {
+	res.redirect('/')
+})
 const PORT =
 	parseInt(process.argv[2]) || parseInt(process.env.APP_PORT) || 3000;
 

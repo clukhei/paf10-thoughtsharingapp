@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {CameraService} from '../camera.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class MainComponent implements OnInit {
 
 	imagePath = '/assets/cactus.png'
 	form : FormGroup
-	constructor(private cameraSvc: CameraService, private fb: FormBuilder, private http: HttpClient) { }
+	imgLinkRef
+	constructor(private cameraSvc: CameraService, private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
 	ngOnInit(): void {
 		this.form = this.fb.group({
@@ -35,13 +37,22 @@ export class MainComponent implements OnInit {
 
 	share(){
 		const formData = new FormData()
-		console.log(this.form.get('image').value)
 		formData.set('image',this.form.get('image').value)
 		formData.set('title', this.form.get('title').value)
 		formData.set('comments',this.form.get('comments').value )
 		this.http.post('/share/', formData)
 			.toPromise()
-			.then(res=> console.log(res))
+			.then(()=> {
+				this.form.reset()
+				this.imagePath = '/assets/cactus.png'
+			})
+			.catch(err=> {
+		
+				if(err.status == 401){
+					this.router.navigate(['/'])
+				}
+				console.log(err)
+			})
 		
 	}
 }

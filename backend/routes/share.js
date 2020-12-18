@@ -26,11 +26,12 @@ router.post('/', multipart.single('image'), async(req,res)=> {
         await mongoClient.db(MONGO_DB)
         .collection(MONGO_COL)
         .insertOne(thoughts)
-        .then(res=> {
-            console.log(res.insertedId)
-            if (res.insertCount > 0) {
+        .then(result=> {
+            console.log(result.insertedCount)
+            if (result.insertedCount > 0) {
+                console.log('hi')
                 res.type('application/json')
-                res.status(200).json(res.insertedId)
+                res.status(200).json(result.insertedId)
                 fs.unlink(req.file.path, ()=> {
                     console.log('deleted temp img file')
                 })
@@ -42,10 +43,6 @@ router.post('/', multipart.single('image'), async(req,res)=> {
         res.status(500).json({message: e})
     }
 
-    
-    
-    res.type('application/json')
-    res.status(200).json({message: "received"})
 })
 
 
