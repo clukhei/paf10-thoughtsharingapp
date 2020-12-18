@@ -27,9 +27,7 @@ router.post('/', multipart.single('image'), async(req,res)=> {
         .collection(MONGO_COL)
         .insertOne(thoughts)
         .then(result=> {
-            console.log(result.insertedCount)
             if (result.insertedCount > 0) {
-                console.log('hi')
                 res.type('application/json')
                 res.status(200).json(result.insertedId)
                 fs.unlink(req.file.path, ()=> {
