@@ -11,7 +11,8 @@ const pool = mysql.createPool({
 })
 
 const sqlStatement = {
-
+ 
+    matchUserPass: "select * from paf2020.user where user_id = ?"
 }
 
 const makeQuery = (sqlQuery, pool) => {
@@ -30,7 +31,7 @@ const makeQuery = (sqlQuery, pool) => {
 };
 
 const sqlQuery = {
-
+    matchUserPass: makeQuery(sqlStatement.matchUserPass, pool)
 }
 
 module.exports = {sqlQuery, sqlStatement, pool}
